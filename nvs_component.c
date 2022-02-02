@@ -9,7 +9,7 @@
 
 esp_err_t nvs_write_str(const char *key, const char *write_value)
 {
-    // Write
+
     nvs_handle_t handle;
     esp_err_t err;
     err = nvs_open("storage", NVS_READWRITE, &handle);
@@ -49,7 +49,6 @@ esp_err_t nvs_read_str(const char *key, char **read_value)
 
 esp_err_t nvs_write_u8(const char *key, uint8_t write_value)
 {
-    // Write
     nvs_handle_t handle;
     esp_err_t err;
     err = nvs_open("storage", NVS_READWRITE, &handle);
@@ -84,7 +83,6 @@ esp_err_t nvs_read_u8(const char *key, uint8_t *read_value)
 
 esp_err_t nvs_write_u16(const char *key, uint16_t write_value)
 {
-    // Write
     nvs_handle_t handle;
     esp_err_t err;
     err = nvs_open("storage", NVS_READWRITE, &handle);
@@ -119,7 +117,6 @@ esp_err_t nvs_read_u16(const char *key, uint16_t *read_value)
 
 esp_err_t nvs_write_i8(const char *key, int8_t write_value)
 {
-    // Write
     nvs_handle_t handle;
     esp_err_t err;
     err = nvs_open("storage", NVS_READWRITE, &handle);
@@ -154,12 +151,10 @@ esp_err_t nvs_read_i8(const char *key, int8_t *read_value)
 
 esp_err_t nvs_write_i16(const char *key, int16_t write_value)
 {
-    // Write
     nvs_handle_t handle;
     esp_err_t err;
     err = nvs_open("storage", NVS_READWRITE, &handle);
     err = nvs_set_i16(handle, key, write_value);
-
     err = nvs_commit(handle);
     DEBUG_NVS((err != ESP_OK) ? "[NVS] Write %s = %i Failed!\n" : "[NVS] Write %s = %i Done\n", key, write_value);
     nvs_close(handle);
@@ -214,7 +209,6 @@ esp_err_t read_struct(const char *key, void **read_struct, size_t size)
 
 void nvs_init(void)
 {
-    //Initialize NVS
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
     {
