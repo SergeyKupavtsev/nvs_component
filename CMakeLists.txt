@@ -1,4 +1,4 @@
-set(component_srcs "./custom_nvs.c")
+set(component_srcs "./nvs_component.c")
 
 idf_component_register(SRCS "${component_srcs}"
                        INCLUDE_DIRS "include"

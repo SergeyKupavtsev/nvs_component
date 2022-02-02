@@ -1,4 +1,4 @@
-#include "custom_nvs.h"
+#include "nvs_component.h"
 
 #define DEBUGGING_NVS 1
 #if DEBUGGING_NVS == 0
