@@ -8,8 +8,9 @@
 
 /**
  * @brief   Initialization NVS storage
+ * @return esp_err_t result
  */
-void nvs_init(void);
+esp_err_t nvs_init(void);
 
 /**
  * @brief   Write value uint8_t in NVS

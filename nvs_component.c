@@ -207,7 +207,7 @@ esp_err_t read_struct(const char *key, void **read_struct, size_t size)
     return err;
 }
 
-void nvs_init(void)
+esp_err_t nvs_init(void)
 {
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
@@ -216,4 +216,5 @@ void nvs_init(void)
         ret = nvs_flash_init();
     }
     ESP_ERROR_CHECK(ret);
+    return ret;
 }
