@@ -28,23 +28,33 @@ esp_err_t nvs_read_str(const char *key, char **read_value)
     err = nvs_open("storage", NVS_READWRITE, &handle);
     size_t required_size;
 
-    nvs_get_str(handle, key, NULL, &required_size);
-    char *data = malloc(required_size);
-    err = nvs_get_str(handle, key, data, &required_size);
-    *read_value = data;
-    switch (err)
-    {
-    case ESP_OK:
-        DEBUG_NVS("[NVS] Read %s = %s\n", key, *read_value);
-        break;
-    case ESP_ERR_NVS_NOT_FOUND:
-        DEBUG_NVS("[NVS] The value %s is not initialized yet!\n", key);
-        break;
-    default:
-        DEBUG_NVS("[NVS] Error (%s) reading!\n", esp_err_to_name(err));
+    err = nvs_get_str(handle, key, NULL, &required_size);
+    if (err != ESP_OK) {
+        DEBUG_NVS("[NVS] Error (%s) getting required size!\n", esp_err_to_name(err));
+        nvs_close(handle);
+        return err;
     }
+
+    char *data = malloc(required_size);
+    if (data == NULL) {
+        DEBUG_NVS("[NVS] Error allocating memory!\n");
+        nvs_close(handle);
+        return ESP_ERR_NO_MEM;
+    }
+
+    err = nvs_get_str(handle, key, data, &required_size);
+    if (err != ESP_OK) {
+        DEBUG_NVS("[NVS] Error (%s) reading!\n", esp_err_to_name(err));
+        free(data);
+        nvs_close(handle);
+        return err;
+    }
+
+    *read_value = data;
+    DEBUG_NVS("[NVS] Read %s = %s\n", key, *read_value);
+
     nvs_close(handle);
-    return err;
+    return ESP_OK;
 }
 
 esp_err_t nvs_write_u8(const char *key, uint8_t write_value)
